@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario Gimnasio</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app" class="container mt-5">
+    <h2>Nuevo Producto</h2>
+    <div class="card p-4">
+        <label>Nombre:</label>
+        <input type="text" v-model="nuevoProducto.nombre" class="form-control">
+
+        <label>Cantidad:</label>
+        <input type="number" v-model="nuevoProducto.cantidad" class="form-control" min="1" max="12" value="1">
+
+        <label>Precio:</label>
+        <input type="number" v-model="nuevoProducto.precio" class="form-control" min="0" value="0">
+
+        <button @click="agregarProducto" class="btn btn-danger mt-3">Agregar</button>
+    </div>
+
+    <h2 class="mt-5">Inventario</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Importe</th>
+            </tr>
+        </thead>
+        <tr v-for="producto in productos" :key="producto.nombre">
+            <td>{{ producto.nombre }}</td>
+            <td :style="{ color: producto.cantidad > 10 ? 'red' : 'black' }">{{ producto.cantidad }}</td>
+            <td>{{ formatoMoneda(producto.precio) }}</td>
+            <td>{{ formatoMoneda(calcularImporte(producto)) }}</td>
+        </tr>
+    </table>
+
+    <div class="mt-4">
+        <h4>Total de Stock: {{ totalStock }}</h4>
+        <h4>Total Invertido: {{ formatoMoneda(totalInvertido) }}</h4>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
